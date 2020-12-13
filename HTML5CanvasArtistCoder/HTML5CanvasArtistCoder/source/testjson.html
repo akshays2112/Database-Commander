@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <script type="text/javascript">
+        var obj = { "name": "John", "age": 30, "city": "New York" };
+        var myJSON = encodeURIComponent(JSON.stringify(obj));
+        alert(myJSON);
+        let params = "data=" + myJSON;
+        let http = null;
+        if (window.XMLHttpRequest) {
+            http = new XMLHttpRequest();
+        } else {
+            http = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        http.open("POST", 'testjson.php', true);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.setRequestHeader("Content-length", params.length);
+        http.setRequestHeader("Connection", "close");
+        http.onreadystatechange = function () {
+            if (http.readyState == 4 && http.status == 200) {
+                alert(JSON.parse(http.responseText)['age']);
+            }
+        }
+        http.send(params);
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html style="width:100%;height:100%;border:0;margin:0;padding:0;display:block;">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body style="width:100%;height:100%;border:0;margin:0;padding:0;display:block;">
+    <canvas id="mainCanvas1" width="1000" height="400" style="border:0;margin:0;padding:0;display:block;"></canvas>
+    <canvas id="mainCanvas2" width="1000" height="400" style="border:0;margin:0;padding:0;display:block;"></canvas>
+    <script src="CCL2WM.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        let GenericFunctionWindowDraw = function () {
+            if (!this.Context) {
+                this.Errors.push('The canvas with id ' + this.CCL2Canvas.GetStringCanvasID() + ' has window with id ' + StringWindowID +
+                    ' which does not have its context set.');
+            }
+            if (this.Context.fillRect) {
+                this.Context.fillStyle = this.ExtraEventArgs.FunctionWindowDraw.color;
+                this.Context.fillRect(this.IntX, this.IntY, this.IntWidth, this.IntHeight);
+            } else {
+                this.Errors.push('The window with id ' + this.GetStringWindowID() + ' has a context which doesnt support fillRect.');
+            }
+        };
+
+        let myCanvas = ccl2canvas.prototype.CreateCCL2CanvasWithJson({ 'StringCanvasID': 'mainCanvas1' });
+
+        let myRedRect = ccl2window.prototype.CreateCCL2WindowWithJson({
+            'CCL2Canvas': myCanvas, 'StringWindowID': 'myRedRect', 'Context': myCanvas.Context, 'IntX': 100, 'IntY': 100,
+            'IntWidth': 200, 'IntHeight': 200, 'FunctionWindowDraw': GenericFunctionWindowDraw, 'FunctionWindowDoubleClick': function () {
+                alert('Double Click at x:' + this.ExtraEventArgs.FunctionWindowDoubleClick.x + ' y:' + this.ExtraEventArgs.FunctionWindowDoubleClick.y);
+            }, 'ExtraEventArgs': { 'FunctionWindowDraw': { color: '#FF0000' } },
+            'FunctionWindowOnContextMenu': function () { alert('Context Menu Popup! Right mouse button click!!'); }
+        });
+
+        let myRedRectChild1 = ccl2window.prototype.CreateCCL2WindowWithJson({
+            'CCL2Canvas': myCanvas, 'StringWindowID': 'myRedRect', 'Context': myCanvas.Context, 'IntX': 10, 'IntY': 10,
+            'IntWidth': 50, 'IntHeight': 50, 'ParentWindow': myRedRect, 'FunctionWindowDraw': GenericFunctionWindowDraw, 'FunctionWindowDoubleClick': function () {
+                alert('Double Click at x:' + this.ExtraEventArgs.FunctionWindowDoubleClick.x + ' y:' + this.ExtraEventArgs.FunctionWindowDoubleClick.y);
+            }, 'ExtraEventArgs': { 'FunctionWindowDraw': { color: '#FF4444' } },
+            'FunctionWindowOnContextMenu': function () { alert('Context Menu Popup! Right mouse button click!!'); }
+        });
+
+        //myRedRect.AddChildWindow(myRedRectChild1) {
+        
+        //}
+
+        let myGreenRect = ccl2window.prototype.CreateCCL2WindowWithJson({
+            'CCL2Canvas': myCanvas, 'StringWindowID': 'myGreenRect', 'Context': myCanvas.Context, 'IntX': 150, 'IntY': 150,
+            'IntWidth': 200, 'IntHeight': 200, 'FunctionWindowDraw': GenericFunctionWindowDraw, 'ExtraEventArgs':
+                { 'FunctionWindowDraw': { color: '#00FF00' } }
+        });
+
+        let myCanvas2 = ccl2canvas.prototype.CreateCCL2CanvasWithJson({ 'StringCanvasID': 'mainCanvas2' });
+
+        let myBlueRect = ccl2window.prototype.CreateCCL2WindowWithJson({
+            'CCL2Canvas': myCanvas2, 'StringWindowID': 'myBlueRect', 'Context': myCanvas2.Context, 'IntX': 100, 'IntY': 100,
+            'IntWidth': 200, 'IntHeight': 200, 'FunctionWindowDraw': GenericFunctionWindowDraw, 'ExtraEventArgs':
+                { 'FunctionWindowDraw': { color: '#0000FF' } }
+        });
+
+        let myPurpleRect = ccl2window.prototype.CreateCCL2WindowWithJson({
+            'CCL2Canvas': myCanvas2, 'StringWindowID': 'myPurpleRect', 'Context': myCanvas2.Context, 'IntX': 150, 'IntY': 150,
+            'IntWidth': 200, 'IntHeight': 200, 'FunctionWindowDraw': GenericFunctionWindowDraw, 'ExtraEventArgs': {
+                'FunctionWindowDraw': { color: '#9932CD' }
+            }
+        });
+
+        let myButton = ccl2button.prototype.CreateCCL2ButtonWithJson({ 'CCL2Canvas': myCanvas, 'StringWindowID': 'myButton', 'IntX': 500, 'IntY': 100,
+            'IntWidth': 32, 'IntHeight': 32, 'BtnImageURL': 'pencil.png', 'BtnImagePressedURL': 'pencil2.png', 
+            'BtnTooltipText': 'Hello World!!', 'FunctionWindowClick': function () {
+                //alert(getClonedObjectPropertiesByFindingWithID('myButton')['CCL2Control'].BtnTooltipText);
+            }});
+
+        InvalidateAllCanvasesFully();
+
+        let drawScrollbarVerticalTopButton = function(img) {
+            myCanvas2.Context.drawImage(img, myPurpleRect.IntX + myPurpleRect.IntWidth - 16, myPurpleRect.IntY);
+        };
+
+        let drawScrollbarVerticalBottomButton = function(img) {
+            myCanvas2.Context.drawImage(img, myPurpleRect.IntX + myPurpleRect.IntWidth - 16, myPurpleRect.IntY + myPurpleRect.IntHeight - 16);
+        };
+
+        let drawScrollbarTopCap = function (img) {
+            myCanvas2.Context.drawImage(img, myPurpleRect.IntX + myPurpleRect.IntWidth - 16, myPurpleRect.IntY + 16);
+        };
+
+        let drawScrollbarMid = function (img) {
+            for (let i = 0; i < myPurpleRect.IntHeight - 42; i++) {
+                myCanvas2.Context.drawImage(img, myPurpleRect.IntX + myPurpleRect.IntWidth - 16, myPurpleRect.IntY + 21 + i);
+            }
+        };
+
+        let drawScrollbarBottomCap = function (img) {
+            myCanvas2.Context.drawImage(img, myPurpleRect.IntX + myPurpleRect.IntWidth - 16, myPurpleRect.IntY + myPurpleRect.IntHeight - 21);
+        };
+
+        let drawScrollbarHandle = function (img) {
+            myCanvas2.Context.drawImage(img, myPurpleRect.IntX + myPurpleRect.IntWidth - 15, myPurpleRect.IntY + myPurpleRect.IntHeight - 45);
+        };
+
+        imageManager.CreateImage(myCanvas2, myPurpleRect, 'ScrollbarVerticalTopButton.png', drawScrollbarVerticalTopButton);
+        imageManager.CreateImage(myCanvas2, myPurpleRect, 'ScrollbarVerticalBottomButton.png', drawScrollbarVerticalBottomButton);
+        imageManager.CreateImage(myCanvas2, myPurpleRect, 'ScrollTopCap.png', drawScrollbarTopCap);
+        imageManager.CreateImage(myCanvas2, myPurpleRect, 'ScrollbarMid.png', drawScrollbarMid);
+        imageManager.CreateImage(myCanvas2, myPurpleRect, 'ScrollBottomCap.png', drawScrollbarBottomCap);
+        imageManager.CreateImage(myCanvas2, myPurpleRect, 'ScrollbarHandle.png', drawScrollbarHandle);
+
+        let errorMsgs = GetAllErrors();
+        if (errorMsgs != '') {
+            alert();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>HTML5CanvasArtistCoder</Name>
+    <ProjectGuid>658194c3-ceb5-4c83-877f-a68801fbbf0e</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>
+    </RootNamespace>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+    <AssemblyName>HTML5CanvasArtistCoder</AssemblyName>
+    <SpecificPageValue>source/Index.html</SpecificPageValue>
+    <StartAction>SpecificPage</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="source\CCL2Button.js" />
+    <Content Include="source\CCL2WM.js" />
+    <Content Include="source\Index.html" />
+    <Content Include="source\pencil.png" />
+    <Content Include="source\pencil2.png" />
+    <Content Include="source\ScrollbarHandle.png" />
+    <Content Include="source\ScrollbarMid.png" />
+    <Content Include="source\ScrollbarVerticalBottomButton.png" />
+    <Content Include="source\ScrollbarVerticalTopButton.png" />
+    <Content Include="source\ScrollBottomCap.png" />
+    <Content Include="source\ScrollTopCap.png" />
+    <Content Include="source\testjson.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="source\mssqltest.php" />
+    <Compile Include="source\oratest.php" />
+    <Compile Include="source\PDOOratest.php" />
+    <Compile Include="source\test.php" />
+    <Compile Include="source\testjson.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="source\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,2 @@
+select * from dba_users; /* Tells all users which in oracle are schema names */
+select * from all_tables where owner='SYSTEM' order by owner, table_name; /* Tells all tables for a particular username/schema */
